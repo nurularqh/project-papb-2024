@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_homepage_bg"
     android:id="@+id/tabLayoutHomepage"
-    tools:context=".homepage.HomePageActivity">
+    tools:context=".homepage.HomePageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
