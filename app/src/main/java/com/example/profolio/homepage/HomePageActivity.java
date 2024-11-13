@@ -1,13 +1,10 @@
 package com.example.profolio.homepage;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +14,6 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,15 +22,9 @@ import com.example.profolio.add.AddKepanitiaanActivity;
 import com.example.profolio.add.AddOrganisasiActivity;
 import com.example.profolio.add.AddPrestasiActivity;
 import com.example.profolio.document.DocumentPageFragment;
-import com.example.profolio.edit.EditProfileActivity;
 import com.example.profolio.profile.ProfilePageFragment;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class HomePageActivity extends AppCompatActivity {
     private int selectedtab = 1;
