@@ -21,7 +21,7 @@ import com.example.profolio.R;
 import com.example.profolio.add.AddKepanitiaanActivity;
 import com.example.profolio.add.AddOrganisasiActivity;
 import com.example.profolio.add.AddPrestasiActivity;
-import com.example.profolio.document.DocumentPageFragment;
+//import com.example.profolio.document.DocumentPageFragment;
 import com.example.profolio.profile.ProfilePageFragment;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -185,7 +185,7 @@ public class HomePageActivity extends AppCompatActivity {
                 scaleAnimation.setFillAfter(true);
                 documentNavbar.startAnimation(scaleAnimation);
 
-                replaceFragment(new DocumentPageFragment());
+//                replaceFragment(new DocumentPageFragment());
 
                 selectedtab = 2;
             }

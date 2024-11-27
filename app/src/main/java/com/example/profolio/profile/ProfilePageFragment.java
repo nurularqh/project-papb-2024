@@ -214,7 +214,7 @@ public class ProfilePageFragment extends Fragment {
                                 sendData.putExtra("jumlahorganisasi", jumlahOrganisasi.getText().toString());
                                 sendData.putExtra("jumlahkepanitiaan", jumlahKepanitiaan.getText().toString());
                                 sendData.putExtra("jumlahprestasi", jumlahPrestasi.getText().toString());
-                                sendData.putExtra("fotoProfile", user.getImageProfile());
+//                                sendData.putExtra("fotoProfile", user.getImageProfile());
 
                                 startActivity(sendData);
                             }
@@ -252,7 +252,6 @@ public class ProfilePageFragment extends Fragment {
                         tvProfileUniversityPeriod.setText(user.getUniversityPeriod());
                         tvProfileSkills.setText(user.getSkills());
                         tvProfileDeskripsi.setText(user.getSelfDescription());
-                        Picasso.get().load(user.getImageProfile()).into(ivFotoProfile);
                     }
                 }
             }

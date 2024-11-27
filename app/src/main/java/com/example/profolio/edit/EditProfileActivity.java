@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,7 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
         edtProfileSkills = findViewById(R.id.edtProfileSkills);
         edtProfileDeskripsi = findViewById(R.id.edtProfileDeskripsi);
         btn_save = findViewById(R.id.btnEditProfile);
-        jumlahOrganisasi =findViewById(R.id.jumlahOrganisasi);
+        jumlahOrganisasi = findViewById(R.id.jumlahOrganisasi);
         jumlahKepanitiaan = findViewById(R.id.jumlahKepanitiaan);
         jumlahPrestasi = findViewById(R.id.jumlahPrestasi);
         ivFotoProfile = findViewById(R.id.ivProfile);
@@ -112,10 +113,10 @@ public class EditProfileActivity extends AppCompatActivity {
         btnEditProfile.setOnClickListener(v -> {
             Intent addProfile = new Intent(Intent.ACTION_GET_CONTENT);
             addProfile.setType("image/*");
-            startActivityForResult(addProfile,galleryCode);
+            startActivityForResult(addProfile, galleryCode);
         });
 
-
+        btn_save.setOnClickListener(v -> saveUserData());
     }
 
     private void saveUserData() {
@@ -134,47 +135,58 @@ public class EditProfileActivity extends AppCompatActivity {
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        StorageReference filePath = mStorage.getReference().child("imageProfile").child(imageUri.getLastPathSegment());
-        filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+        database.child("Users").child(userId).child("UserData").setValue(new UserModel(username, firstName, lastName, phone, email,
+                        seniorHighSchool, seniorHighSchoolPeriod, university,
+                        universityPeriod, skills, selfDescription, ""))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        String getFotoProfile = task.getResult().toString();
-
-                        database.child("Users").child(userId).child("UserData").setValue(new UserModel(username, firstName, lastName, phone, email,
-                                seniorHighSchool, seniorHighSchoolPeriod, university,
-                                universityPeriod, skills, selfDescription, getFotoProfile)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(EditProfileActivity.this, "Update Data Successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(EditProfileActivity.this, "Update Data Successfully", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditProfileActivity.this, "Update Data Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditProfileActivity.this, "Update Data Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        StorageReference filePath = mStorage.getReference().child("imageProfile").child(imageUri.getLastPathSegment());
+//        filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Uri> task) {
+//                        String getFotoProfile = task.getResult().toString();
+//
+//                        database.child("Users").child(userId).child("UserData").setValue(new UserModel(username, firstName, lastName, phone, email,
+//                                seniorHighSchool, seniorHighSchoolPeriod, university,
+//                                universityPeriod, skills, selfDescription, getFotoProfile)).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void unused) {
+//                                Toast.makeText(EditProfileActivity.this, "Update Data Successfully", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
+//                });
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(EditProfileActivity.this, "Update Data Failed", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == galleryCode && resultCode == RESULT_OK){
+        if (requestCode == galleryCode && resultCode == RESULT_OK) {
             imageUri = data.getData();
             ivFotoProfile.setImageURI(imageUri);
         }
-
-        btn_save.setOnClickListener(v -> {
-            saveUserData();
-            finish();
-        });
     }
 }

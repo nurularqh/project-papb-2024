@@ -107,7 +107,7 @@ public class HomePageFragment extends Fragment {
                     UserModel user = snapshot.getValue(UserModel.class);
                     user.setKey(snapshot.getKey());
                     helloUser.setText("Hello, " + user.getUsername());
-                    Picasso.get().load(user.getImageProfile()).into(ivFotoProfile);
+//                    Picasso.get().load(user.getImageProfile()).into(ivFotoProfile);
                 }
             }
 
